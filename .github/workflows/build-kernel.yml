@@ -4,11 +4,11 @@ on:
     types: [started]
   workflow_dispatch:
   schedule:
-      - cron: '0 0 * * 1'
+      - cron: '12 13 * * 2'
 
 jobs:
   build:
-    name: Build Kernel by ${{ github.actor }}
+    name: Build Kernel by Admire
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
