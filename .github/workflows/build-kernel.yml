@@ -4,7 +4,7 @@ on:
     types: [started]
   workflow_dispatch:
   schedule:
-      - cron: '14 22 * * 1'
+      - cron: '14 22 * * 1,5'
 
 jobs:
   build:
