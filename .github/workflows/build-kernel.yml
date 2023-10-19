@@ -77,7 +77,12 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }} android-kernel --depth=1
-
+        
+    - name: Del the old kernelsu
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace
+        rm -rf android-kernel/KernelSU
+        
     - name: Download source boot image
       if: env.MAKE_BOOT_IMAGE == 'true'
       run: |
