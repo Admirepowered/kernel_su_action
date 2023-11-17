@@ -92,33 +92,33 @@ jobs:
             echo "FORMAT_MKBOOTING=$(echo `tools/unpack_bootimg.py --boot_img=boot-source.img --format mkbootimg`)" >> $GITHUB_ENV
             echo "HAVE_SOURCE_BOOT_IMAGE=true" >> $GITHUB_ENV
         fi
-    - name: Setup KernelSU
-      if: env.USE_KERNELSU == 'true'
-      run: |
-        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        git clone https://github.com/tiann/KernelSU
-        
     #- name: Setup KernelSU
     #  if: env.USE_KERNELSU == 'true'
     #  run: |
     #    cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-    #    curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
-    #    if [ ${{ env.USE_KPROBES }} = true ]; then
-    #        echo "CONFIG_MODULES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        echo "CONFIG_KPROBES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        echo "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        echo "CONFIG_KPROBE_EVENTS=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #    fi
-    #    if [ ${{ env.USE_OVERLAYFS }} = true ]; then
-    #        echo "CONFIG_OVERLAY_FS=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #    fi
-    #    if [ ${{ env.DISABLE-LTO }} = true ]; then
-    #        sed -i 's/CONFIG_LTO=y/CONFIG_LTO=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        sed -i 's/CONFIG_LTO_CLANG=y/CONFIG_LTO_CLANG=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        sed -i 's/CONFIG_THINLTO=y/CONFIG_THINLTO=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #        echo "CONFIG_LTO_NONE=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-    #    fi
-    #    echo "UPLOADNAME=-KernelSU" >> $GITHUB_ENV
+    #    git clone https://github.com/tiann/KernelSU
+        
+    - name: Setup KernelSU
+      if: env.USE_KERNELSU == 'true'
+      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
+        if [ ${{ env.USE_KPROBES }} = true ]; then
+            echo "CONFIG_MODULES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            echo "CONFIG_KPROBES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            echo "CONFIG_HAVE_KPROBES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            echo "CONFIG_KPROBE_EVENTS=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        fi
+        if [ ${{ env.USE_OVERLAYFS }} = true ]; then
+            echo "CONFIG_OVERLAY_FS=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        fi
+        if [ ${{ env.DISABLE-LTO }} = true ]; then
+            sed -i 's/CONFIG_LTO=y/CONFIG_LTO=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            sed -i 's/CONFIG_LTO_CLANG=y/CONFIG_LTO_CLANG=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            sed -i 's/CONFIG_THINLTO=y/CONFIG_THINLTO=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+            echo "CONFIG_LTO_NONE=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        fi
+        echo "UPLOADNAME=-KernelSU" >> $GITHUB_ENV
 
     - name: Build kernel
       run: |
@@ -130,7 +130,7 @@ jobs:
         #chmod +x ./build_alioth.sh
         #./build_alioth.sh
         make -j$(nproc --all) O=out ARCH=${{ env.TARGET_ARCH }} ${{ env.CUSTOM_CLANG_BUILD_COMMAND }} CC=clang ${{ env.BUILD_EXTRA_COMMAND }} ${{ env.KERNEL_DEFCONFIG }}
-        make -j$(nproc --all) -arch=arm64 O=out ARCH=${{ env.TARGET_ARCH }} ${{ env.CUSTOM_CLANG_BUILD_COMMAND }} CC=clang ${{ env.BUILD_EXTRA_COMMAND }}
+        make -j$(nproc --all) O=out ARCH=${{ env.TARGET_ARCH }} ${{ env.CUSTOM_CLANG_BUILD_COMMAND }} CC=clang ${{ env.BUILD_EXTRA_COMMAND }}
 
     - name: Check a kernel output files
       run: |
