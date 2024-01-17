@@ -16,8 +16,13 @@ else
 fi
 
 test -d "$GKI_ROOT/KernelPatch" || git clone https://github.com/Admirepowered/KernelPatch
-cp -r ./KernelPatch/kernel/include/* ./include/
-cp -r ./KernelPatch/kernel/patch/include/* ./include/
+#cp -r ./KernelPatch/kernel/include/* ./include/
+#cp -r ./KernelPatch/kernel/patch/include/* ./include/
+find ./kernel/base -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./kernel/pathch -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./kernel/base -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./kernel/pathch -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+
 cd "$GKI_ROOT/KernelPatch"
 git stash
 if [ "$(git status | grep -Po 'v\d+(\.\d+)*' | head -n1)" ]; then
