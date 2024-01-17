@@ -38,8 +38,8 @@ if test -d "$GKI_ROOT/common/drivers"; then
 elif test -d "$GKI_ROOT/drivers"; then
      ln -sf "../KernelPatch/kernel" "kPatch"
 fi
-cp -R "../../KernelPatch/kernel/include/*" "../../include/"
-cp -R "../../KernelPatch/kernel/patch/include/*" "../../include/"
+cp -R "../KernelPatch/kernel/include/*" "../../include/"
+cp -R "../KernelPatch/kernel/patch/include/*" "../../include/"
 cd "$GKI_ROOT"
 
 echo '[+] Add KernelPatch driver to Makefile'
