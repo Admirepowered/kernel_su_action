@@ -44,7 +44,7 @@ echo '[+] Add KernelPatch driver to Makefile'
 
 DRIVER_MAKEFILE=$DRIVER_DIR/Makefile
 DRIVER_KCONFIG=$DRIVER_DIR/Kconfig
-grep -q "kPatch" "$DRIVER_MAKEFILE" || printf "obj-\$(CONFIG_KSU) += kPatch/\n" >> "$DRIVER_MAKEFILE"
+grep -q "kPatch" "$DRIVER_MAKEFILE" || printf "obj-\$(CONFIG_Apatch) += kPatch/\n" >> "$DRIVER_MAKEFILE"
 grep -q "kPatch" "$DRIVER_KCONFIG" || sed -i "/endmenu/i\\source \"drivers/kPatch/Kconfig\"" "$DRIVER_KCONFIG"
 
 echo '[+] Done.'
