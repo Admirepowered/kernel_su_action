@@ -28,11 +28,11 @@ if [ -z "${1-}" ]; then
 else
     git checkout "$1"
 fi
-#cp -r ./KernelPatch/kernel/include/* ./include/
-#cp -r ./KernelPatch/kernel/patch/include/* ./include/
-find ./KernelPatch/kernel/ -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
-find ./KernelPatch/kernel/ -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
-cat ./KernelPatch/kernel/base/start.c
+#cp -r ./kernel/include/* ../include/
+#cp -r ./kernel/patch/include/* ../include/
+find ./kernel/ -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./kernel/ -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+cat ./kernel/base/start.c
 cd "$GKI_ROOT"
 
 echo "[+] GKI_ROOT: $GKI_ROOT"
