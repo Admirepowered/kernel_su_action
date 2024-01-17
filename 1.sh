@@ -18,10 +18,8 @@ fi
 test -d "$GKI_ROOT/KernelPatch" || git clone https://github.com/Admirepowered/KernelPatch
 #cp -r ./KernelPatch/kernel/include/* ./include/
 #cp -r ./KernelPatch/kernel/patch/include/* ./include/
-find ./KernelPatch/kernel/base -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
-find ./KernelPatch/kernel/patch -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
-find ./KernelPatch/kernel/base -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
-find ./KernelPatch/kernel/patch -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./KernelPatch/kernel/ -type f -name "*.c" -exec sed -i 's/</"/g; s/>/"/g' {} \;
+find ./KernelPatch/kernel/ -type f -name "*.h" -exec sed -i 's/</"/g; s/>/"/g' {} \;
 cat ./KernelPatch/kernel/base/start.c
 
 cd "$GKI_ROOT/KernelPatch"
