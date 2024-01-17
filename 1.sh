@@ -15,7 +15,7 @@ else
      exit 127
 fi
 
-test -d "$GKI_ROOT/KernelPatch" || git clone https://github.com/bmax121/KernelPatch
+test -d "$GKI_ROOT/KernelPatch" || git clone https://github.com/Admirepowered/KernelPatch
 cd "$GKI_ROOT/KernelPatch"
 git stash
 if [ "$(git status | grep -Po 'v\d+(\.\d+)*' | head -n1)" ]; then
