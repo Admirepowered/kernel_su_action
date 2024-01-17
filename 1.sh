@@ -16,6 +16,8 @@ else
 fi
 
 test -d "$GKI_ROOT/KernelPatch" || git clone https://github.com/Admirepowered/KernelPatch
+cp -R "$GKI_ROOT/KernelPatch/kernel/include/*" "$GKI_ROOT/include/"
+cp -R "$GKI_ROOT/KernelPatch/kernel/path/include/*" "$GKI_ROOT/include/"
 cd "$GKI_ROOT/KernelPatch"
 git stash
 if [ "$(git status | grep -Po 'v\d+(\.\d+)*' | head -n1)" ]; then
@@ -38,8 +40,6 @@ if test -d "$GKI_ROOT/common/drivers"; then
 elif test -d "$GKI_ROOT/drivers"; then
      ln -sf "../KernelPatch/kernel" "kPatch"
 fi
-cp -R "kPatch/include/*" "../../include/"
-cp -R "kPatch/include/*" "../../include/"
 cd "$GKI_ROOT"
 
 echo '[+] Add KernelPatch driver to Makefile'
