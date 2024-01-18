@@ -30,9 +30,9 @@ else
 fi
 #cp -r ./kernel/include/* ../include/
 #cp -r ./kernel/patch/include/* ../include/
-find ./kernel/ -type f -name "*.c" -exec sed -i 's|<\s*\([^>]\{1,10\}\)\s*>|"\1"|g' {} \;
-find ./kernel/ -type f -name "*.h" -exec sed -i 's|<\s*\([^>]\{1,10\}\)\s*>|"\1"|g' {} \;
-cat ./kernel/base/start.c
+find ./kernel/ -type f -name "*.c" -exec sed -i 's|<\([^=<>-]\{1,10\}\)>|"\1"|g' {} \;
+find ./kernel/ -type f -name "*.h" -exec sed -i 's|<\([^=<>-]\{1,10\}\)>|"\1"|g' {} \;
+cat ./kernel/base/map.c
 cd "$GKI_ROOT"
 
 echo "[+] GKI_ROOT: $GKI_ROOT"
